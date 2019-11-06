@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: technology-service
+  namespace: sba
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: technology-service
+  template:
+    metadata:
+      labels:
+        app: technology-service
+    spec:
+      containers:
+        - name: sit-bmw-model
+          image: registry.cn-hangzhou.aliyuncs.com/dev_savage/sba-technology:{version}
+          ports:
+            - name: http-port
+              containerPort: 10006
+          env:
+            - name: spring_profiles_active
+              value: k8s
+      imagePullSecrets:
+        - name: sbasecret
